@@ -1,4 +1,5 @@
 package com.Mingeso_Aldo.Pep1.Entities;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

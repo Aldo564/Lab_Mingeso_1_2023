@@ -1,7 +1,7 @@
 package com.Mingeso_Aldo.Pep1.Services;
 
 import com.Mingeso_Aldo.Pep1.Entities.PorcentajeEntity;
-import com.Mingeso_Aldo.Pep1.Entities.ProveedorEntity;
+import com.Mingeso_Aldo.Pep1.Entities.AcopioEntity;
 import com.Mingeso_Aldo.Pep1.Repositories.AcopioRepository;
 import com.Mingeso_Aldo.Pep1.Repositories.PorcentajeRepository;
 import com.Mingeso_Aldo.Pep1.Repositories.ProveedorRepository;
@@ -20,6 +20,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class SubirDataService {
@@ -32,18 +33,15 @@ public class SubirDataService {
 
     private final Logger logg = LoggerFactory.getLogger(SubirDataService.class);
 
-    public ArrayList<AcopioRepository> obtenerDataAcopio(){
-        return (ArrayList<AcopioRepository>) AcopioRepository.findAll();
+    public ArrayList<AcopioEntity> obtenerDataAcopio(){
+        ArrayList<AcopioEntity> acopios = (ArrayList<AcopioEntity>) dataAcopioRepository.findAll();
+        return acopios;
     }
 
-    public ArrayList<PorcentajeRepository> obtenerDataPorcentaje(){
-        return (ArrayList<PorcentajeRepository>) PorcentajeRepository.findAll();
+    public List<PorcentajeEntity> obtenerDataPorcentaje() {
+        ArrayList<PorcentajeEntity> porcentajes = (ArrayList<PorcentajeEntity>) dataPorcentajeRepository.findAll();
+        return porcentajes;
     }
-
-    public ArrayList<ProveedorRepository> obtenerDataProveedor(){
-        return (ArrayList<ProveedorRepository>) ProveedorRepository.findAll();
-    }
-
 
     @Generated
     public String guardar(MultipartFile file){
@@ -73,7 +71,7 @@ public class SubirDataService {
     public void leerCsvAcopio(String direccion){
         String texto = "";
         BufferedReader bf = null;
-        AcopioRepository.deleteAll();
+        dataAcopioRepository.deleteAll();
         try{
             bf = new BufferedReader(new FileReader(direccion));
             String temp = "";
@@ -102,9 +100,11 @@ public class SubirDataService {
             }
         }
     }
+
     public void guardarDataAcopio(AcopioEntity data){
-        AcopioRepository.save(data);
+        dataAcopioRepository.save(data);
     }
+
     public void guardarDataDBAcopio(String fecha, String turno, String proveedor, String kls_leche){
         AcopioEntity newData = new AcopioEntity();
         newData.setFecha(fecha);
@@ -115,7 +115,7 @@ public class SubirDataService {
     }
 
     public void eliminarDataAcopio(ArrayList<AcopioEntity> datas){
-        AcopioRepository.deleteAll(datas);
+        dataAcopioRepository.deleteAll(datas);
     }
 
     /* Metodos para guardar datos de los archivos .csv de Porcentaje*/
@@ -124,7 +124,7 @@ public class SubirDataService {
     public void leerCsvPorcentaje(String direccion){
         String texto = "";
         BufferedReader bf = null;
-        PorcentajeRepository.deleteAll();
+        dataPorcentajeRepository.deleteAll();
         try{
             bf = new BufferedReader(new FileReader(direccion));
             String temp = "";
@@ -135,7 +135,7 @@ public class SubirDataService {
                     count = 0;
                 }
                 else{
-                    guardarDataDBPorcentaje(bfRead.split(";")[0], bfRead.split(";")[1], bfRead.split(";")[2], bfRead.split(";")[3]);
+                    guardarDataDBPorcentaje(bfRead.split(";")[0], Integer.parseInt(bfRead.split(";")[1]), Integer.parseInt(bfRead.split(";")[2]), bfRead.split(";")[3]);
                     temp = temp + "\n" + bfRead;
                 }
             }
@@ -153,9 +153,11 @@ public class SubirDataService {
             }
         }
     }
+
     public void guardarDataPorcentaje(PorcentajeEntity data){
-        PorcentajeRepository.save(data);
+        dataPorcentajeRepository.save(data);
     }
+
     public void guardarDataDBPorcentaje(String cod_proveedor, int grasa, int solido, String fecha){
         PorcentajeEntity newData = new PorcentajeEntity();
         newData.setCod_proveedor(cod_proveedor);
@@ -166,61 +168,6 @@ public class SubirDataService {
     }
 
     public void eliminarDataPorcentaje(ArrayList<PorcentajeEntity> datas){
-        PorcentajeRepository.deleteAll(datas);
+        dataPorcentajeRepository.deleteAll(datas);
     }
-
-    /*
-    Metodos para guardar datos de los archivos .csv de Proveedores
-
-    @Generated
-    public void leerCsvProveedores(String direccion){
-        String texto = "";
-        BufferedReader bf = null;
-        ProveedorRepository.deleteAll();
-        try{
-            bf = new BufferedReader(new FileReader(direccion));
-            String temp = "";
-            String bfRead;
-            int count = 1;
-            while((bfRead = bf.readLine()) != null){
-                if (count == 1){
-                    count = 0;
-                }
-                else{
-                    guardarDataDBProveedor(bfRead.split(";")[0], bfRead.split(";")[1], bfRead.split(";")[2], bfRead.split(";")[3]);
-                    temp = temp + "\n" + bfRead;
-                }
-            }
-            texto = temp;
-            System.out.println("Archivo leido exitosamente");
-        }catch(Exception e){
-            System.err.println("No se encontro el archivo");
-        }finally{
-            if(bf != null){
-                try{
-                    bf.close();
-                }catch(IOException e){
-                    logg.error("ERROR", e);
-                }
-            }
-        }
-    }
-
-    public void guardarDataProveedor(ProveedorEntity data){
-        ProveedorRepository.save(data);
-    }
-
-    public void guardarDataDBProveedor(String codigo, String nombre, String categoria, Boolean retencion){
-        ProveedorEntity newData = new ProveedorEntity();
-        newData.setCodigo(codigo);
-        newData.setNombre(nombre);
-        newData.setCategoria(categoria);
-        newData.setRetencion(retencion);
-        guardarDataProveedor(newData);
-    }
-
-    public void eliminarDataProveedor(ArrayList<ProveedorEntity> datas){
-        ProveedorRepository.deleteAll(datas);
-    }
-    */
-    }
+}
