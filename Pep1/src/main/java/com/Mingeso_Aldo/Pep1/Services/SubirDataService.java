@@ -105,12 +105,12 @@ public class SubirDataService {
         dataAcopioRepository.save(data);
     }
 
-    public void guardarDataDBAcopio(String fecha, String turno, String proveedor, String kls_leche){
+    public void guardarDataDBAcopio(String fecha, String turno, String proveedor, String kg_leche){
         AcopioEntity newData = new AcopioEntity();
         newData.setFecha(fecha);
         newData.setTurno(turno);
         newData.setProveedor(proveedor);
-        newData.setKls_leche(kls_leche);
+        newData.setKg_leche(kg_leche);
         guardarDataAcopio(newData);
     }
 

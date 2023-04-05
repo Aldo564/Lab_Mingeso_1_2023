@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 
 @Repository
-public interface AcopioRepository extends JpaRepositoryRepository<AcopioEntity, String> {
+public interface AcopioRepository extends JpaRepository<AcopioEntity, String> {
 
 }
