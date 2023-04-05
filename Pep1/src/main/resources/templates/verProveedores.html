@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>MilkStgo</title>
+        <link rel="stylesheet" type="text/css" href="../static/style.css">
+    </head>
+    <body>
+        <header>
+            <h1>Bienvenido a MilkStgo</h1>
+        </header>
+        <nav>
+            <ul>
+                <li><a href="/">Volver al menu principal</a></li>
+                <li><a href="/ingresar-proveedor">Ingresar nuevo proveedor</a></li>
+            </ul>
+        </nav>
+        <div>
+            <h1>Lista de proveedores</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Codigo</th>
+                        <th>Nombre</th>
+                        <th>Categoría</th>
+                        <th>Retención</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="proveedores:${proveedores}">
+                        <td th:text="${proveedores.codigo}"></td>
+                        <td th:text="${proveedores.nombre}"></td>
+                        <td th:text="${proveedores.categoria}"></td>
+                        <td th:text="${proveedores.retencion}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <footer>
+            <p>Derechos reservados MilkStgo</p>
+        </footer>
+    </body>
+</html>

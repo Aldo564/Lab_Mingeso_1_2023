@@ -3,7 +3,7 @@ server:
 
 spring:
     application:
-        name: proyecto_docker
+        name: pep1_mingeso
     jpa:
         show-sql: true
         hibernate:
