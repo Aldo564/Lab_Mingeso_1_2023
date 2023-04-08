@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+  <head>
+      <title>Subir Archivo</title>
+      <link rel = "stylesheet" href= "../static/css/style.css" type="text/css" th:href="@{/css/style.css}">
+  </head>
+  <body>
+    <header>
+      <h1>Subir archivo de porcentajes de solido y grasa</h1>
+    </header>
+    <nav>
+      <ul>
+        <li><a href="/">Volver al menu principal</a></li>
+      </ul>
+    </nav>
+    <div>
+      <h1>Cargar archivo de acopio</h1>
+      <form th:action="@{/subirArchivoPorcentaje}" method="POST" enctype="multipart/form-data">
+        <br>
+        <input type="file" class="form-control" name="file" accept = ".csv">
+        <br>
+        <input class = "btn btn-primary"
+               type="submit" value="Cargar el archivo a la Base de Datos">
+      </form>
+      <br>
+      <u><b>
+        <h2 th:if="${mensaje}" th:text="${mensaje}"></h2>
+        <h2 th:unless="${mensaje}">No se ha cargado ningun archivo.</h2>
+      </b></u>
+    </div>
+  </body>
+</html>

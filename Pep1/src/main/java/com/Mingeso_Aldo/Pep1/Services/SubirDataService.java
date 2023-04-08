@@ -4,7 +4,6 @@ import com.Mingeso_Aldo.Pep1.Entities.PorcentajeEntity;
 import com.Mingeso_Aldo.Pep1.Entities.AcopioEntity;
 import com.Mingeso_Aldo.Pep1.Repositories.AcopioRepository;
 import com.Mingeso_Aldo.Pep1.Repositories.PorcentajeRepository;
-import com.Mingeso_Aldo.Pep1.Repositories.ProveedorRepository;
 import lombok.Generated;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,27 +19,24 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class SubirDataService {
 
     @Autowired
     private AcopioRepository dataAcopioRepository;
+    @Autowired
     private PorcentajeRepository dataPorcentajeRepository;
-    private ProveedorRepository dataProveedorRepository;
 
 
     private final Logger logg = LoggerFactory.getLogger(SubirDataService.class);
 
     public ArrayList<AcopioEntity> obtenerDataAcopio(){
-        ArrayList<AcopioEntity> acopios = (ArrayList<AcopioEntity>) dataAcopioRepository.findAll();
-        return acopios;
+        return (ArrayList<AcopioEntity>) dataAcopioRepository.findAll();
     }
 
-    public List<PorcentajeEntity> obtenerDataPorcentaje() {
-        ArrayList<PorcentajeEntity> porcentajes = (ArrayList<PorcentajeEntity>) dataPorcentajeRepository.findAll();
-        return porcentajes;
+    public ArrayList<PorcentajeEntity> obtenerDataPorcentaje() {
+        return (ArrayList<PorcentajeEntity>) dataPorcentajeRepository.findAll();
     }
 
     @Generated
@@ -142,7 +138,7 @@ public class SubirDataService {
             texto = temp;
             System.out.println("Archivo leido exitosamente");
         }catch(Exception e){
-            System.err.println("No se encontro el archivo");
+            System.err.println(e);
         }finally{
             if(bf != null){
                 try{

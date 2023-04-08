@@ -1,24 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
     <head>
         <title>MilkStgo</title>
-        <link rel="stylesheet" type="text/css" href="../static/style.css">
+        <link rel = "stylesheet" href= "../static/css/style.css" type="text/css" th:href="@{/css/style.css}">
     </head>
     <body>
         <header>
-            <h1>Bienvenido a MilkStgo</h1>
+            <h1>MilkStgo</h1>
         </header>
         <nav>
             <ul>
-                <li><a href="/proveedores">Ver Proveedores</a></li>
-                <li><a href="/subirArchivo">Cargar CSV</a></li>
+                <li><a href="/verProveedores">Ver Proveedores</a></li>
+                <li><a href="/subirArchivoAcopio">Importar datos de acopio</a></li>
+                <li><a href="/subirArchivoPorcentaje">Importar datos de porcentajes de grasa y solido</a></li>
                 <li><a href="/planilla">Generar planilla de pago</a></li>
             </ul>
         </nav>
         <main>
-            <h2>Bienvenidos!</h2>
-            <p>Somos MilkStgo, una empresa dedicada a la producción de comestibles a base de leche, principalmente yogurt, mantequilla y quesos. Tenemos más de 40 años produciendo productos para el mercado nacional.</p>
-            <img src="../static/images/milkstgo.png" alt="Logo MilkStgo">
+            <div>
+                <table>
+                    <tr>
+                        <th>
+                            <h2>Bienvenidos!</h2>
+                            <p>Somos MilkStgo, una empresa dedicada a la produccion de comestibles a base de leche, principalmente yogurt, mantequilla y quesos. Tenemos mas de 40 anios produciendo productos para el mercado nacional.</p>
+                        </th>
+                        <th>
+                            <a><img src="https://i.ibb.co/rQWMfbv/milkstgo.png" alt="milkstgo"></a>
+                        </th>
+                    </tr>
+                </table>
+            </div>
         </main>
         <footer>
             <p>Derechos reservados MilkStgo</p>

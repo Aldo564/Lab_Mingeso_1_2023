@@ -1,5 +1,6 @@
 package com.Mingeso_Aldo.Pep1.Entities;
 
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,9 +16,9 @@ import javax.persistence.*;
 public class PorcentajeEntity {
 
     @Id
+    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(unique = true, nullable = false)
-    private String id_porcentaje;
+    private Integer ID_PORCENTAJE;
 
     private String cod_proveedor;
     private int grasa;

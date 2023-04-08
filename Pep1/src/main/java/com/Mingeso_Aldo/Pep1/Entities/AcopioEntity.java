@@ -1,5 +1,6 @@
 package com.Mingeso_Aldo.Pep1.Entities;
 
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,16 +9,16 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "acopio")
-@Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Data
 
 public class AcopioEntity {
 
     @Id
+    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(unique = true, nullable = false)
-    private String id_acopio;
+    private Integer ID_ACOPIO;
 
     private String fecha;
     private String turno;
