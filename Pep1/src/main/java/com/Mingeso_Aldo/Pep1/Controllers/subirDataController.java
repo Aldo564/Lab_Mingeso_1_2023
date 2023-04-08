@@ -32,7 +32,7 @@ public class subirDataController {
     public String uploadAcopio(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
         subirData.guardar(file);
         redirectAttributes.addFlashAttribute("mensaje", "¡Archivo cargado correctamente!");
-        subirData.leerCsvAcopio("Acopio.csv");
+        subirData.leerCsvAcopio(file.getOriginalFilename());
         return "redirect:/subirArchivoAcopio";
     }
 
@@ -40,7 +40,7 @@ public class subirDataController {
     public String uploadPorcentaje(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
         subirData.guardar(file);
         redirectAttributes.addFlashAttribute("mensaje", "¡Archivo cargado correctamente!");
-        subirData.leerCsvPorcentaje("Acopio.csv");
+        subirData.leerCsvPorcentaje(file.getOriginalFilename());
         return "redirect:/subirArchivoPorcentaje";
     }
 

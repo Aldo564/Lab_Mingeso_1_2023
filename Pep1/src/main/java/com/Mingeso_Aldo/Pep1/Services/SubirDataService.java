@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 @Service
@@ -121,6 +123,7 @@ public class SubirDataService {
         String texto = "";
         BufferedReader bf = null;
         dataPorcentajeRepository.deleteAll();
+        System.out.println(direccion);
         try{
             bf = new BufferedReader(new FileReader(direccion));
             String temp = "";
@@ -131,14 +134,15 @@ public class SubirDataService {
                     count = 0;
                 }
                 else{
-                    guardarDataDBPorcentaje(bfRead.split(";")[0], Integer.parseInt(bfRead.split(";")[1]), Integer.parseInt(bfRead.split(";")[2]), bfRead.split(";")[3]);
+                    System.out.println(bfRead);
+                    guardarDataDBPorcentaje(bfRead.split(";")[0], Integer.parseInt(bfRead.split(";")[1]), Integer.parseInt(bfRead.split(";")[2]), LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
                     temp = temp + "\n" + bfRead;
                 }
             }
             texto = temp;
             System.out.println("Archivo leido exitosamente");
         }catch(Exception e){
-            System.err.println(e);
+            System.err.println("No se encontro el archivo");
         }finally{
             if(bf != null){
                 try{
