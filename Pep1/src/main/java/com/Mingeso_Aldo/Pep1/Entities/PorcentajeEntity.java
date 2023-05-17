@@ -20,9 +20,10 @@ public class PorcentajeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer ID_PORCENTAJE;
 
+    private Integer ID_archivo;
     private String cod_proveedor;
-    private int grasa;
-    private int solido;
+    private Integer grasa;
+    private Integer solido;
 
     private String fecha; // Asi se sabe con que excel de acopio va
 }

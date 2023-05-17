@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Planillas de pago</title>
+        <link rel = "stylesheet" href= "../static/css/style.css" type="text/css" th:href="@{/css/style.css}">
+    </head>
+    <body>
+        <header>
+            <h1>Planillas de pago</h1>
+        </header>
+        <nav>
+            <ul>
+                <li><a href="/">Volver al menu principal</a></li>
+            </ul>
+        </nav>
+            <hi>Seleccione al proveedor para generar planilla de pago</hi>
+            <form th:action="@{/generarPlanilla}" method="GET">
+                <select name="codigo" th:if="${not #lists.isEmpty(proveedores)}" >
+                    <option th:each="proveedor : ${proveedores}" th:text="${proveedor.codigo}"></option>
+                </select>
+                <div> <input class="btn btn-primary" type="submit" value="Cargar planilla"></input> </div>
+
+            </form>
+        <footer>
+            <p>Derechos reservados MilkStgo</p>
+        </footer>
+    </body>
+</html>

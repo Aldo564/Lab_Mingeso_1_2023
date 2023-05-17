@@ -45,6 +45,6 @@ public class ProveedorController {
                                  @RequestParam("categoria") String categoria,
                                  @RequestParam("retencion") Boolean retencion){
         proveedorService.guardarProveedor(codigo, nombre, categoria, retencion);
-        return "redirect:/ingresarProveedor";
+        return "redirect:/verProveedores";
     }
 }

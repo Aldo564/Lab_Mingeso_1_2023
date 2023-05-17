@@ -13,7 +13,8 @@ public class ProveedorService {
     @Autowired
     ProveedorRepository proveedorRepository;
 
-    public void guardarProveedor(String codigo, String nombre, String categoria, Boolean retencion){
+    public void guardarProveedor(String codigo, String nombre, String categoria, Boolean retencion)
+    {
         ProveedorEntity proveedor = new ProveedorEntity();
         proveedor.setCodigo(codigo);
         proveedor.setNombre(nombre);
@@ -22,15 +23,20 @@ public class ProveedorService {
         proveedorRepository.save(proveedor);
     }
 
-    public ArrayList<ProveedorEntity> obtenerProveedores(){
+    public ArrayList<ProveedorEntity> obtenerProveedores()
+    {
         return (ArrayList<ProveedorEntity>) proveedorRepository.findAll();
     }
 
-    public String obtenerCategoria(String codigo){
+    public String obtenerCategoria(String codigo)
+    {
         return proveedorRepository.findCategory(codigo);
     }
 
-    public ProveedorEntity findByCodigo(String codigo){
+    public ProveedorEntity findByCodigo(String codigo)
+    {
         return proveedorRepository.findByCodigo(codigo);
     }
+
+
 }

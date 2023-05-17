@@ -22,6 +22,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+
 @Service
 public class SubirDataService {
 
@@ -30,7 +31,8 @@ public class SubirDataService {
     @Autowired
     private PorcentajeRepository dataPorcentajeRepository;
 
-
+    Integer ID_ARCHIVO_ACOPIO = 0;
+    Integer ID_ARCHIVO_PORCENTAJE = 0;
     private final Logger logg = LoggerFactory.getLogger(SubirDataService.class);
 
     public ArrayList<AcopioEntity> obtenerDataAcopio(){
@@ -69,7 +71,7 @@ public class SubirDataService {
     public void leerCsvAcopio(String direccion){
         String texto = "";
         BufferedReader bf = null;
-        dataAcopioRepository.deleteAll();
+        //dataAcopioRepository.deleteAll();
         try{
             bf = new BufferedReader(new FileReader(direccion));
             String temp = "";
@@ -80,7 +82,7 @@ public class SubirDataService {
                     count = 0;
                 }
                 else{
-                    guardarDataDBAcopio(bfRead.split(";")[0], bfRead.split(";")[1], bfRead.split(";")[2], bfRead.split(";")[3]);
+                    guardarDataDBAcopio(ID_ARCHIVO_ACOPIO, bfRead.split(";")[0], bfRead.split(";")[1], bfRead.split(";")[2], Integer.parseInt(bfRead.split(";")[3]));
                     temp = temp + "\n" + bfRead;
                 }
             }
@@ -91,6 +93,7 @@ public class SubirDataService {
         }finally{
             if(bf != null){
                 try{
+                    ID_ARCHIVO_ACOPIO++;
                     bf.close();
                 }catch(IOException e){
                     logg.error("ERROR", e);
@@ -103,8 +106,9 @@ public class SubirDataService {
         dataAcopioRepository.save(data);
     }
 
-    public void guardarDataDBAcopio(String fecha, String turno, String proveedor, String kg_leche){
+    public void guardarDataDBAcopio(Integer ID_archivo, String fecha, String turno, String proveedor, Integer kg_leche){
         AcopioEntity newData = new AcopioEntity();
+        newData.setID_archivo(ID_archivo);
         newData.setFecha(fecha);
         newData.setTurno(turno);
         newData.setProveedor(proveedor);
@@ -122,8 +126,7 @@ public class SubirDataService {
     public void leerCsvPorcentaje(String direccion){
         String texto = "";
         BufferedReader bf = null;
-        dataPorcentajeRepository.deleteAll();
-        System.out.println(direccion);
+        //dataPorcentajeRepository.deleteAll();
         try{
             bf = new BufferedReader(new FileReader(direccion));
             String temp = "";
@@ -134,8 +137,7 @@ public class SubirDataService {
                     count = 0;
                 }
                 else{
-                    System.out.println(bfRead);
-                    guardarDataDBPorcentaje(bfRead.split(";")[0], Integer.parseInt(bfRead.split(";")[1]), Integer.parseInt(bfRead.split(";")[2]), LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
+                    guardarDataDBPorcentaje(ID_ARCHIVO_PORCENTAJE,bfRead.split(";")[0], Integer.parseInt(bfRead.split(";")[1]), Integer.parseInt(bfRead.split(";")[2]), LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
                     temp = temp + "\n" + bfRead;
                 }
             }
@@ -146,6 +148,7 @@ public class SubirDataService {
         }finally{
             if(bf != null){
                 try{
+                    ID_ARCHIVO_PORCENTAJE++;
                     bf.close();
                 }catch(IOException e){
                     logg.error("ERROR", e);
@@ -158,8 +161,9 @@ public class SubirDataService {
         dataPorcentajeRepository.save(data);
     }
 
-    public void guardarDataDBPorcentaje(String cod_proveedor, int grasa, int solido, String fecha){
+    public void guardarDataDBPorcentaje(int id_archivo,String cod_proveedor, int grasa, int solido, String fecha){
         PorcentajeEntity newData = new PorcentajeEntity();
+        newData.setID_archivo(id_archivo);
         newData.setCod_proveedor(cod_proveedor);
         newData.setGrasa(grasa);
         newData.setSolido(solido);
