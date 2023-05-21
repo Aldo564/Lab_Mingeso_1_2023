@@ -7,10 +7,7 @@ import com.Mingeso_Aldo.Pep1.Entities.ProveedorEntity;
 import com.Mingeso_Aldo.Pep1.Repositories.AcopioRepository;
 import com.Mingeso_Aldo.Pep1.Repositories.PorcentajeRepository;
 import com.Mingeso_Aldo.Pep1.Repositories.ProveedorRepository;
-import com.Mingeso_Aldo.Pep1.Services.AcopioService;
-import com.Mingeso_Aldo.Pep1.Services.PagoService;
-import com.Mingeso_Aldo.Pep1.Services.PorcentajeService;
-import com.Mingeso_Aldo.Pep1.Services.ProveedorService;
+import com.Mingeso_Aldo.Pep1.Services.*;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +40,9 @@ class PagoServiceTests {
 
 	@Autowired
 	private PorcentajeService porcentajeService;
+
+	@Autowired
+	private PlanillaService planillaService;
 
 	@Test
 	void contextLoads() {
@@ -79,9 +79,18 @@ class PagoServiceTests {
 	@Test
 	public void testPagoPorcentajeSolido4()
 	{
-		int result = pagoService.pagoPorcentajeSolido(10,10);
+		int result = pagoService.pagoPorcentajeSolido(38,15);
 
 		assertEquals(2250, result);
+	}
+
+	// Con entradas sólido = -1 y kilos = 5, la salida debiera ser -1
+	@Test
+	public void testPagoPorcentajeSolido5()
+	{
+		int result = pagoService.pagoPorcentajeSolido(-1,5);
+
+		assertEquals(-1, result);
 	}
 
 	// Con entradas grasa = 18 y kilos = 10 la salida debiera ser 300
@@ -93,6 +102,33 @@ class PagoServiceTests {
 		assertEquals(300, result);
 	}
 
+	// Con entradas grasa = 30 y kilos = 10 la salida debiera ser 800
+	@Test
+	public void testPagoPorcentajeGrasa2()
+	{
+		int result = pagoService.pagoPorcentajeGrasa(30,10);
+
+		assertEquals(800, result);
+	}
+
+	// Con entradas grasa = 48 y kilos = 5 la salida debiera ser 800
+	@Test
+	public void testPagoPorcentajeGrasa3()
+	{
+		int result = pagoService.pagoPorcentajeGrasa(48,5);
+
+		assertEquals(600, result);
+	}
+
+	// Con entradas grasa = -1 y kilos = 5 la salida debiera ser -1
+	@Test
+	public void testPagoPorcentajeGrasa4()
+	{
+		int result = pagoService.pagoPorcentajeGrasa(-1,5);
+
+		assertEquals(-1, result);
+	}
+
 	// Con entradas categoria = "A" y kilos = 7 la salida debiera ser 4900
 	@Test
 	public void testPagoCategoria()
@@ -100,6 +136,42 @@ class PagoServiceTests {
 		int result = pagoService.pagoCategoria("A", 7);
 
 		assertEquals(4900, result);
+	}
+
+	// Con entradas categoria = "B" y kilos = 7 la salida debiera ser 3850
+	@Test
+	public void testPagoCategoria2()
+	{
+		int result = pagoService.pagoCategoria("B", 7);
+
+		assertEquals(3850, result);
+	}
+
+	// Con entradas categoria = "C" y kilos = 15 la salida debiera ser 6000
+	@Test
+	public void testPagoCategoria3()
+	{
+		int result = pagoService.pagoCategoria("C", 15);
+
+		assertEquals(6000, result);
+	}
+
+	// Con entradas categoria = "D" y kilos = 9 la salida debiera ser 6000
+	@Test
+	public void testPagoCategoria4()
+	{
+		int result = pagoService.pagoCategoria("D", 9);
+
+		assertEquals(2250, result);
+	}
+
+	// Con entradas categoria = "F" y kilos = 9 la salida debiera ser 6000
+	@Test
+	public void testPagoCategoria5()
+	{
+		int result = pagoService.pagoCategoria("F", 9);
+
+		assertEquals(-1, result);
 	}
 
 	// Con entrada dif_kilos = 15 la salida debiera ser 7
@@ -111,6 +183,42 @@ class PagoServiceTests {
 		assertEquals(7, result);
 	}
 
+	// Con entrada dif_kilos = 0 la salida debiera ser 0
+	@Test
+	public void testVariacionKilos2()
+	{
+		int result = pagoService.variacionKilos(0);
+
+		assertEquals(0, result);
+	}
+
+	// Con entrada dif_kilos = 30 la salida debiera ser 15
+	@Test
+	public void testVariacionKilos3()
+	{
+		int result = pagoService.variacionKilos(30);
+
+		assertEquals(15, result);
+	}
+
+	// Con entrada dif_kilos = 50 la salida debiera ser 30
+	@Test
+	public void testVariacionKilos4()
+	{
+		int result = pagoService.variacionKilos(50);
+
+		assertEquals(30, result);
+	}
+
+	// Con entrada dif_kilos = -1 la salida debiera ser -1
+	@Test
+	public void testVariacionKilos5()
+	{
+		int result = pagoService.variacionKilos(-1);
+
+		assertEquals(-1, result);
+	}
+
 	// Con entrada dif_Grasa = 18 la salida debiera ser 12
 	@Test
 	public void testVariacionGrasa()
@@ -118,6 +226,42 @@ class PagoServiceTests {
 		int result = pagoService.variacionGrasa(18);
 
 		assertEquals(12, result);
+	}
+
+	// Con entrada dif_Grasa = 10 la salida debiera ser 0
+	@Test
+	public void testVariacionGrasa2()
+	{
+		int result = pagoService.variacionGrasa(10);
+
+		assertEquals(0, result);
+	}
+
+	// Con entrada dif_Grasa = 30 la salida debiera ser 20
+	@Test
+	public void testVariacionGrasa3()
+	{
+		int result = pagoService.variacionGrasa(30);
+
+		assertEquals(20, result);
+	}
+
+	// Con entrada dif_Grasa = 50 la salida debiera ser 30
+	@Test
+	public void testVariacionGrasa4()
+	{
+		int result = pagoService.variacionGrasa(50);
+
+		assertEquals(30, result);
+	}
+
+	// Con entrada dif_Grasa = -1 la salida debiera ser -1
+	@Test
+	public void testVariacionGrasa5()
+	{
+		int result = pagoService.variacionGrasa(-1);
+
+		assertEquals(-1, result);
 	}
 
 	// Con entrada dif_solido = 10 la salida debiera ser 18
@@ -129,6 +273,42 @@ class PagoServiceTests {
 		assertEquals(18, result);
 	}
 
+	// Con entrada dif_solido = 5 la salida debiera ser 0
+	@Test
+	public void testVariacionSolido2()
+	{
+		int result = pagoService.variacionSolido(5);
+
+		assertEquals(0, result);
+	}
+
+	// Con entrada dif_solido = 20 la salida debiera ser 27
+	@Test
+	public void testVariacionSolido3()
+	{
+		int result = pagoService.variacionSolido(20);
+
+		assertEquals(27, result);
+	}
+
+	// Con entrada dif_solido = 40 la salida debiera ser 45
+	@Test
+	public void testVariacionSolido4()
+	{
+		int result = pagoService.variacionSolido(40);
+
+		assertEquals(45, result);
+	}
+
+	// Con entrada dif_solido = -1 la salida debiera ser -1
+	@Test
+	public void testVariacionSolido5()
+	{
+		int result = pagoService.variacionSolido(-1);
+
+		assertEquals(-1, result);
+	}
+
 
 	// Con las entradas pagoAcopio = 100, maniana = false y tarde = true la salida debiera ser 8
 	@Test
@@ -137,6 +317,33 @@ class PagoServiceTests {
 		double result = pagoService.pagoFrecuencia(100, false, true);
 
 		assertEquals(8, result);
+	}
+
+	// Con las entradas pagoAcopio = 150, maniana = true y tarde = true la salida debiera ser 8
+	@Test
+	public void testPagoFrecuencia2()
+	{
+		double result = pagoService.pagoFrecuencia(150, true, true);
+
+		assertEquals(30, result);
+	}
+
+	// Con las entradas pagoAcopio = 50, maniana = true y tarde = false la salida debiera ser 8
+	@Test
+	public void testPagoFrecuencia3()
+	{
+		double result = pagoService.pagoFrecuencia(50, true, false);
+
+		assertEquals(6, result);
+	}
+
+	// Con las entradas pagoAcopio = 200, maniana = false y tarde = false la salida debiera ser 8
+	@Test
+	public void testPagoFrecuencia4()
+	{
+		double result = pagoService.pagoFrecuencia(200, false, false);
+
+		assertEquals(0, result);
 	}
 
 	// Con entradas de arraylist con 2 días distintos, pero uno de ellos repetido, la salida debiera ser 2
@@ -283,6 +490,10 @@ class PagoServiceTests {
 		ArrayList<AcopioEntity> acopios = acopioService.obtenerAcopios();
 		ArrayList<ProveedorEntity> proveedores = proveedorService.obtenerProveedores();
 		ArrayList<PorcentajeEntity> porcentajes = porcentajeService.obtenerPorcentajes();
+		ArrayList<PlanillaEntity> planillas = new ArrayList<>();
+		PlanillaEntity planilla = planillaService.getAll();
+		planillas.add(planilla);
+		planillaService.eliminarData(planillas);
 		acopioService.eliminarData(acopios);
 		proveedorService.eliminarData(proveedores);
 		porcentajeService.eliminarData(porcentajes);

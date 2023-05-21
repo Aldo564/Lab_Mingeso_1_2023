@@ -14,7 +14,4 @@ public interface PlanillaRepository extends JpaRepository<PlanillaEntity, String
     @Query("select e from PlanillaEntity e")
     PlanillaEntity find();
 
-    @Query("delete from PlanillaEntity p where p.ID_PLANILLA = 0")
-    void deleteById();
-
 }

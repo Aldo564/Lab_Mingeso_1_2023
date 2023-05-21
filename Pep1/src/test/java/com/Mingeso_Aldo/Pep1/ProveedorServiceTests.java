@@ -37,14 +37,12 @@ class ProveedorServiceTests {
 		// Poblando db con datos dummies
 
 		ProveedorEntity proveedor = new ProveedorEntity();
-		proveedor.setID_PROVEEDOR(2);
 		proveedor.setCodigo("1003");
 		proveedor.setNombre("Juan");
 		proveedor.setCategoria("A");
 		proveedor.setRetencion(true);
 
 		ProveedorEntity proveedor2 = new ProveedorEntity();
-		proveedor2.setID_PROVEEDOR(3);
 		proveedor2.setCodigo("1000");
 		proveedor2.setNombre("Pedro");
 		proveedor2.setCategoria("B");
@@ -58,14 +56,14 @@ class ProveedorServiceTests {
 		ArrayList<ProveedorEntity> expected = new ArrayList<>();
 
 		ProveedorEntity aux1 = new ProveedorEntity();
-		aux1.setID_PROVEEDOR(2);
+		aux1.setID_PROVEEDOR(5);
 		aux1.setCodigo("1003");
 		aux1.setNombre("Juan");
 		aux1.setCategoria("A");
 		aux1.setRetencion(true);
 
 		ProveedorEntity aux2 = new ProveedorEntity();
-		aux2.setID_PROVEEDOR(3);
+		aux2.setID_PROVEEDOR(6);
 		aux2.setCodigo("1000");
 		aux2.setNombre("Pedro");
 		aux2.setCategoria("B");
@@ -116,7 +114,7 @@ class ProveedorServiceTests {
 	}
 
 	@Test
-	public void testFinByCodigo()
+	public void testFindByCodigo()
 	{
 		//##################################################################
 		// Poblando db ocn datos dummies
@@ -140,7 +138,7 @@ class ProveedorServiceTests {
 		//##################################################################
 
 		ProveedorEntity expected = new ProveedorEntity();
-		expected.setID_PROVEEDOR(6);
+		expected.setID_PROVEEDOR(3);
 		expected.setCodigo("1003");
 		expected.setNombre("Juan");
 		expected.setCategoria("A");

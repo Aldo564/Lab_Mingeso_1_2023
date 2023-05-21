@@ -209,9 +209,9 @@ class PorcentajeServiceTests {
 		PorcentajeEntity porcentaje = new PorcentajeEntity();
 		porcentaje.setID_PORCENTAJE(1);
 		porcentaje.setID_archivo(1);
-		porcentaje.setCod_proveedor("1000");
+		porcentaje.setCod_proveedor("1003");
 		porcentaje.setGrasa(15);
-		porcentaje.setSolido(15);
+		porcentaje.setSolido(10);
 		porcentaje.setFecha("17/03/2023");
 
 
@@ -220,7 +220,7 @@ class PorcentajeServiceTests {
 		porcentaje2.setID_archivo(2);
 		porcentaje2.setCod_proveedor("1003");
 		porcentaje2.setGrasa(20);
-		porcentaje2.setSolido(10);
+		porcentaje2.setSolido(15);
 		porcentaje2.setFecha("28/03/2023");
 
 		porcentajeRepository.save(porcentaje);
@@ -230,7 +230,7 @@ class PorcentajeServiceTests {
 
 		String result = porcentajeService.obtenerDiferenciaSolido("1003");
 
-		assertEquals("0", result);
+		assertEquals("150", result);
 
 		ArrayList<PorcentajeEntity> porcentajes = porcentajeService.obtenerPorcentajes();
 		porcentajeService.eliminarData(porcentajes);

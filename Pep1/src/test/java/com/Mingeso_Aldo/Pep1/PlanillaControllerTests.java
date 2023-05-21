@@ -2,12 +2,14 @@ package com.Mingeso_Aldo.Pep1;
 
 import com.Mingeso_Aldo.Pep1.Controllers.PlanillaController;
 import com.Mingeso_Aldo.Pep1.Entities.AcopioEntity;
+import com.Mingeso_Aldo.Pep1.Entities.PlanillaEntity;
 import com.Mingeso_Aldo.Pep1.Entities.PorcentajeEntity;
 import com.Mingeso_Aldo.Pep1.Entities.ProveedorEntity;
 import com.Mingeso_Aldo.Pep1.Repositories.AcopioRepository;
 import com.Mingeso_Aldo.Pep1.Repositories.PorcentajeRepository;
 import com.Mingeso_Aldo.Pep1.Repositories.ProveedorRepository;
 import com.Mingeso_Aldo.Pep1.Services.AcopioService;
+import com.Mingeso_Aldo.Pep1.Services.PlanillaService;
 import com.Mingeso_Aldo.Pep1.Services.PorcentajeService;
 import com.Mingeso_Aldo.Pep1.Services.ProveedorService;
 import org.junit.jupiter.api.Test;
@@ -44,6 +46,9 @@ class PlanillaControllerTests {
 	@Autowired
 	PorcentajeService porcentajeService;
 
+	@Autowired
+	PlanillaService planillaService;
+
 	@Test
 	void contextLoads() {
 	}
@@ -57,7 +62,7 @@ class PlanillaControllerTests {
 		assertEquals("seleccionarPlanilla", result);
 	}
 
-	/*
+
 	@Test
 	void generarPlanillaTests()
 	{
@@ -140,10 +145,14 @@ class PlanillaControllerTests {
 		ArrayList<AcopioEntity> acopios = acopioService.obtenerAcopios();
 		ArrayList<ProveedorEntity> proveedores = proveedorService.obtenerProveedores();
 		ArrayList<PorcentajeEntity> porcentajes = porcentajeService.obtenerPorcentajes();
+		ArrayList<PlanillaEntity> planillas = new ArrayList<>();
+		PlanillaEntity planilla = planillaService.getAll();
+		planillas.add(planilla);
+		planillaService.eliminarData(planillas);
 		acopioService.eliminarData(acopios);
 		proveedorService.eliminarData(proveedores);
 		porcentajeService.eliminarData(porcentajes);
 	}
-	 */
+
 
 }

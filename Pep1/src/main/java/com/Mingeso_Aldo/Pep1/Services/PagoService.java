@@ -42,7 +42,7 @@ public class PagoService {
         }
         else
         {
-            return 0;
+            return -1;
         }
     }
 
@@ -62,7 +62,7 @@ public class PagoService {
         }
         else
         {
-            return 0;
+            return -1;
         }
     }
 
@@ -73,7 +73,7 @@ public class PagoService {
             case "B" -> (550 * kilos);
             case "C" -> (400 * kilos);
             case "D" -> (250 * kilos);
-            default -> 0;
+            default -> -1;
         };
     }
 
@@ -91,7 +91,7 @@ public class PagoService {
         {
             return 15;
         }
-        else if(46 >= dif_kilos)
+        else if(46 <= dif_kilos)
         {
             return 30;
         }

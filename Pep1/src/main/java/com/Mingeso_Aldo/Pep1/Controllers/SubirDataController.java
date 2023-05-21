@@ -12,7 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping
-public class subirDataController {
+public class SubirDataController {
 
     @Autowired
     private SubirDataService subirData;

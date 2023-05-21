@@ -46,7 +46,7 @@ class SubirDataServiceTests {
 	public void testGuardarDataAcopio()
 	{
 		AcopioEntity acopio = new AcopioEntity();
-		acopio.setID_ACOPIO(30);
+		acopio.setID_ACOPIO(35);
 		acopio.setID_archivo(1);
 		acopio.setFecha("15/04/2023");
 		acopio.setTurno("M");
@@ -69,7 +69,7 @@ class SubirDataServiceTests {
 	public void testGuardarDataPorcentaje()
 	{
 		PorcentajeEntity porcentaje = new PorcentajeEntity();
-		porcentaje.setID_PORCENTAJE(13);
+		porcentaje.setID_PORCENTAJE(15);
 		porcentaje.setID_archivo(1);
 		porcentaje.setCod_proveedor("1003");
 		porcentaje.setGrasa(15);
@@ -92,7 +92,7 @@ class SubirDataServiceTests {
 	public void testGuardarDataDBAcopio()
 	{
 		AcopioEntity acopio2 = new AcopioEntity();
-		acopio2.setID_ACOPIO(31);
+		acopio2.setID_ACOPIO(36);
 		acopio2.setID_archivo(1);
 		acopio2.setFecha("16/04/2023");
 		acopio2.setTurno("T");
@@ -115,7 +115,7 @@ class SubirDataServiceTests {
 	public void testGuardarDataDBPorcentaje()
 	{
 		PorcentajeEntity porcentaje2 = new PorcentajeEntity();
-		porcentaje2.setID_PORCENTAJE(14);
+		porcentaje2.setID_PORCENTAJE(16);
 		porcentaje2.setID_archivo(1);
 		porcentaje2.setCod_proveedor("1000");
 		porcentaje2.setGrasa(30);
@@ -133,4 +133,6 @@ class SubirDataServiceTests {
 
 		porcentajeService.eliminarData(result);
 	}
+
+
 }

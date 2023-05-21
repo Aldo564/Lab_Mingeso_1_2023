@@ -1,12 +1,8 @@
 package com.Mingeso_Aldo.Pep1;
 
-import com.Mingeso_Aldo.Pep1.Entities.AcopioEntity;
 import com.Mingeso_Aldo.Pep1.Entities.PlanillaEntity;
-import com.Mingeso_Aldo.Pep1.Repositories.AcopioRepository;
 import com.Mingeso_Aldo.Pep1.Repositories.PlanillaRepository;
-import com.Mingeso_Aldo.Pep1.Services.AcopioService;
 import com.Mingeso_Aldo.Pep1.Services.PlanillaService;
-import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -36,10 +32,10 @@ class PlanillaServiceTests {
 		// Poblando db con datos dummies
 
 		PlanillaEntity planilla = new PlanillaEntity();
-		planilla.setID_PLANILLA(1);
 		planilla.setFecha("2");
 		planilla.setCodigo("1003");
 		planilla.setNombre("Pedro");
+		planilla.setDias("1");
 		planilla.setKg_leche("100");
 		planilla.setPromedio_kg("100");
 		planilla.setVariacion_leche("75");
@@ -63,10 +59,11 @@ class PlanillaServiceTests {
 		//############################################################3
 
 		PlanillaEntity expected = new PlanillaEntity();
-		expected.setID_PLANILLA(1);
+		expected.setID_PLANILLA(3);
 		expected.setFecha("2");
 		expected.setCodigo("1003");
 		expected.setNombre("Pedro");
+		expected.setDias("1");
 		expected.setKg_leche("100");
 		expected.setPromedio_kg("100");
 		expected.setVariacion_leche("75");
@@ -89,7 +86,7 @@ class PlanillaServiceTests {
 
 		assertEquals(expected, result);
 
-		// Borramos el contenido dela db para que no molest en la ejecucion de la aplicacion
+		// Borramos el contenido dela db para que no molest en la ejecución de la aplicación
 		ArrayList<PlanillaEntity> planillas = new ArrayList<>();
 		planillas.add(expected);
 		planillaService.eliminarData(planillas);
