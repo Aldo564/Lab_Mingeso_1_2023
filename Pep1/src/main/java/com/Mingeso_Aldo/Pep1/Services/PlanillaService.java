@@ -2,6 +2,7 @@ package com.Mingeso_Aldo.Pep1.Services;
 
 import com.Mingeso_Aldo.Pep1.Entities.PlanillaEntity;
 import com.Mingeso_Aldo.Pep1.Repositories.PlanillaRepository;
+import lombok.Generated;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,7 @@ public class PlanillaService {
     @Autowired
     PlanillaRepository planillaRepository;
 
-    public PlanillaEntity guardarPlanilla(String fecha, String codigo, String nombre, String kg_leche,
+    public void guardarPlanilla(String fecha, String codigo, String nombre, String kg_leche,
                                 String dias, String promedio_kg, String variacion_leche,
                                 String grasa, String variacion_grasa,
                                 String solidos, String variacion_st, String pago_leche,
@@ -45,8 +46,6 @@ public class PlanillaService {
         planilla.setMonto_retencion(monto_retencion);
         planilla.setMonto_final(monto_final);
         planillaRepository.save(planilla);
-
-        return planilla;
     }
 
     public PlanillaEntity getAll()
@@ -54,8 +53,9 @@ public class PlanillaService {
         return planillaRepository.find();
     }
 
-    public void deleteAll()
+    @Generated
+    public void eliminarData(ArrayList<PlanillaEntity> datas)
     {
-        planillaRepository.deleteAll();
+        planillaRepository.deleteAll(datas);
     }
 }

@@ -10,13 +10,13 @@
         </header>
         <nav>
             <ul>
-                <li><a href="/">Volver al menu principal</a></li>
+                <li><a href="/">Volver al menú principal</a></li>
                 <li><a href="/verProveedores">Ver proveedores</a></li>
             </ul>
         </nav>
             <hi>Ingrese los datos del nuevo proveedor</hi>
             <form th:action="@{/ingresarProveedor}" method="POST">
-                <ul>
+                <ul class="registration-form">
                     <li>
                         <label>Codigo</label>
                         <input type="text" placeholder="Ingrese el codigo del proveedor" id="codigo"
@@ -29,16 +29,19 @@
                     </li>
                     <li>
                         <label>Categoria</label>
-                        <input type="text" placeholder="Ingrese la categoria del proveedor" id="categoria"
-                               name="categoria" required>
+                        <select id="categoria" name="categoria" required>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                        </select>
                     </li>
                     <li>
                     <label>Retencion</label>
                         <input type="radio" name="retencion" value="true" required> Si
                         <input type="radio" name="retencion" value="false" required> No
                     </li>
-                    <li>
-                        <input class="btn btn-primary" type="submit" value="Ingresar proveedor">
+                    <li class="btn-secondary-container">
+                        <input class="btn-secondary" type="submit" value="Ingresar proveedor">
                     </li>
                 </ul>
             </form>

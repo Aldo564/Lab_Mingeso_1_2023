@@ -1,6 +1,7 @@
 package com.Mingeso_Aldo.Pep1.Services;
 
 import com.Mingeso_Aldo.Pep1.Entities.PlanillaEntity;
+import com.Mingeso_Aldo.Pep1.Entities.ProveedorEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -65,19 +66,15 @@ public class PagoService {
         }
     }
 
-    public int pagoCategoria(String categoria, int kilos) {
-        switch (categoria) {
-            case "A":
-                return (700 * kilos);
-            case "B":
-                return (550 * kilos);
-            case "C":
-                return (400 * kilos);
-            case "D":
-                return (250 * kilos);
-            default:
-                return 0;
-        }
+    public int pagoCategoria(String categoria, int kilos)
+    {
+        return switch (categoria) {
+            case "A" -> (700 * kilos);
+            case "B" -> (550 * kilos);
+            case "C" -> (400 * kilos);
+            case "D" -> (250 * kilos);
+            default -> 0;
+        };
     }
 
     public int variacionKilos(int dif_kilos)
@@ -94,7 +91,7 @@ public class PagoService {
         {
             return 15;
         }
-        else if(46 <= dif_kilos)
+        else if(46 >= dif_kilos)
         {
             return 30;
         }
@@ -171,43 +168,7 @@ public class PagoService {
         return pagoFrecuencia;
     }
 
-    public double pagoAcopioLeche(int kilos, String categoria, int grasa, int solido, int dias, boolean maniana, boolean tarde)
-    {
-        double pagoAcopio = pagoCategoria(categoria, kilos) + pagoPorcentajeGrasa(grasa, kilos) + pagoPorcentajeSolido(solido, kilos);
-        if (dias >= 10)
-        {
-            pagoAcopio = pagoAcopio + pagoFrecuencia(pagoAcopio, maniana, tarde);
-        }
-        return pagoAcopio;
-    }
-
-    public double descuentos(int dif_kilos, int dif_grasa, int dif_solido)
-    {
-        double descuentos = variacionSolido(dif_solido) + variacionGrasa(dif_grasa) + variacionKilos(dif_kilos);
-        return (descuentos/10);
-    }
-
-    public double pagoTotal(int kilos, String categoria, int grasa, int solido, int dias, boolean maniana, boolean tarde, int dif_kilos, int dif_grasa, int dif_solido)
-    {
-        double descuento = descuentos(dif_kilos, dif_grasa, dif_solido);
-
-        if (descuento > 1)
-        {
-            descuento = 1;
-        }
-
-        double pagoTotal = pagoAcopioLeche(kilos, categoria, grasa, solido, dias, maniana, tarde) - pagoAcopioLeche(kilos, categoria, grasa, solido, dias, maniana, tarde)*descuento;
-        return pagoTotal;
-    }
-
-    public double pagoFinal(int kilos, String categoria, int grasa, int solido, int dias, boolean maniana, boolean tarde, int dif_kilos, int dif_grasa, int dif_solido) {
-        double pagoTotal = pagoTotal(kilos, categoria, grasa, solido, dias, maniana, tarde, dif_kilos, dif_grasa, dif_solido);
-        double pagoFinal = pagoTotal - pagoTotal * 0.13;
-
-        return pagoFinal;
-    }
-
-    private String obtenerDias(String codigo, ArrayList<String> fechas)
+    public String obtenerDias(ArrayList<String> fechas)
     {
         ArrayList<String> dias = new ArrayList<>();
         for (String fecha:fechas)
@@ -225,12 +186,13 @@ public class PagoService {
 
     public PlanillaEntity generarPlanilla(String codigo) {
         ArrayList<String> fechas = acopioService.obtenerFechas(codigo);
+        ProveedorEntity proveedor = proveedorService.findByCodigo(codigo);
 
         ArrayList<String> variacion_leche = acopioService.obtenerVariacionLeche(codigo);
         String nombre = proveedorService.findByCodigo(codigo).getNombre();
         int kgs_leche = acopioService.kgs_leche(codigo);
 
-        String dias = obtenerDias(codigo, fechas);
+        String dias = obtenerDias(fechas);
 
         String quincena = "";
         if (Integer.parseInt(fechas.get(0).split("/")[0]) <= 15) {
@@ -240,7 +202,6 @@ public class PagoService {
         }
 
         int dif_kilos = Integer.parseInt(variacion_leche.get(0));
-        String variacionLeche = variacion_leche.get(1);
         String categoria = proveedorService.obtenerCategoria(codigo);
         int grasa = porcentajeService.obtenerGrasa(codigo);
         int solido = porcentajeService.obtenerSolido(codigo);
@@ -267,14 +228,19 @@ public class PagoService {
 
         pago_Acopio = pago_Acopio + pago_Frecuencia;
 
-        double var_kg = pago_Acopio * (variacionKilos(dif_kilos)/100.0);
-        double var_grasa = pago_Acopio * (variacionGrasa(dif_kilos)/100.0);
-        double var_solido = pago_Acopio * (variacionSolido(dif_kilos)/100.0);
+        double var_kg = 0;
+        if (dif_kilos < 0)
+        {
+            var_kg = pago_Acopio * (variacionKilos(Math.abs(dif_kilos)/100));
+        }
+
+        double var_grasa = pago_Acopio * (variacionGrasa(Integer.parseInt(dif_grasa))/100.0);
+        double var_solido = pago_Acopio * (variacionSolido(Integer.parseInt(dif_solido))/100.0);
         double descuentos = var_kg + var_grasa + var_solido;
         double pago_total = pago_Acopio - descuentos;
 
         double retencion = 0.00;
-        if (pago_total >= 950000)
+        if (pago_total >= 950000 && proveedor.getRetencion())
         {
             retencion = pago_total*0.13;
         }
@@ -288,11 +254,7 @@ public class PagoService {
                 Double.toString(var_grasa), Double.toString(var_solido), Double.toString(pago_total),
                 Double.toString(retencion), Double.toString(pago_final));
 
-        System.out.println("13");
-
         PlanillaEntity planilla = planillaService.getAll();
-
-        System.out.println("14");
 
         return planilla;
 

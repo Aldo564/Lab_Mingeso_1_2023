@@ -10,17 +10,18 @@
         </header>
         <nav>
             <ul>
-                <li><a href="/">Volver al menu principal</a></li>
+                <li><a href="/">Volver al menú principal</a></li>
             </ul>
         </nav>
-            <hi>Seleccione al proveedor para generar planilla de pago</hi>
-            <form th:action="@{/generarPlanilla}" method="GET">
-                <select name="codigo" th:if="${not #lists.isEmpty(proveedores)}" >
+            <form th:action="@{/generarPlanilla}" method="GET" th:if="${not #lists.isEmpty(proveedores)}">
+                <br>
+                <hi>Seleccione al proveedor para generar planilla de pago</hi>
+                <select name="codigo">
                     <option th:each="proveedor : ${proveedores}" th:text="${proveedor.codigo}"></option>
                 </select>
-                <div> <input class="btn btn-primary" type="submit" value="Cargar planilla"></input> </div>
-
+                <div class="btn-secondary-container"> <input class="btn-secondary" type="submit" value="Cargar planilla"></input> </div>
             </form>
+            <h3 th:unless="${not #lists.isEmpty(proveedores)}" style="color: #a44b01; text-align: center; margin: 10px 25%;"> No existen Proveedores en el sistema </h3>
         <footer>
             <p>Derechos reservados MilkStgo</p>
         </footer>

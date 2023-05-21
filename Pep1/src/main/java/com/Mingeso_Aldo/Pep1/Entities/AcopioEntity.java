@@ -25,4 +25,5 @@ public class AcopioEntity {
     private String turno;
     private String proveedor;
     private Integer kg_leche;
+
 }

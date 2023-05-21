@@ -30,16 +30,32 @@ public class subirDataController {
     @PostMapping("/subirArchivoAcopio")
     public String uploadAcopio(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
         subirData.guardar(file);
-        redirectAttributes.addFlashAttribute("mensaje", "¡Archivo cargado correctamente!");
-        subirData.leerCsvAcopio(file.getOriginalFilename());
+        boolean correcto = subirData.leerCsvAcopio(file.getOriginalFilename());
+        if (correcto)
+        {
+            redirectAttributes.addFlashAttribute("mensaje", "¡Archivo cargado correctamente!");
+        }
+        else
+        {
+            redirectAttributes.addFlashAttribute("mensaje", "Verifique el archivo que esta subiendo");
+        }
+
         return "redirect:/subirArchivoAcopio";
     }
 
     @PostMapping("/subirArchivoPorcentaje")
     public String uploadPorcentaje(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
         subirData.guardar(file);
-        redirectAttributes.addFlashAttribute("mensaje", "¡Archivo cargado correctamente!");
-        subirData.leerCsvPorcentaje(file.getOriginalFilename());
+        boolean correcto = subirData.leerCsvPorcentaje(file.getOriginalFilename());
+        if (correcto)
+        {
+            redirectAttributes.addFlashAttribute("mensaje", "¡Archivo cargado correctamente!");
+        }
+        else
+        {
+            redirectAttributes.addFlashAttribute("mensaje", "Verifique el archivo que esta subiendo");
+        }
+
         return "redirect:/subirArchivoPorcentaje";
     }
 

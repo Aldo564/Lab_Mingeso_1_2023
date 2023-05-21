@@ -1,5 +1,6 @@
 package com.Mingeso_Aldo.Pep1.Services;
 
+import com.Mingeso_Aldo.Pep1.Entities.PlanillaEntity;
 import com.Mingeso_Aldo.Pep1.Entities.ProveedorEntity;
 import com.Mingeso_Aldo.Pep1.Repositories.ProveedorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,11 @@ public class ProveedorService {
     public ProveedorEntity findByCodigo(String codigo)
     {
         return proveedorRepository.findByCodigo(codigo);
+    }
+
+    public void eliminarData(ArrayList<ProveedorEntity> datas)
+    {
+        proveedorRepository.deleteAll(datas);
     }
 
 

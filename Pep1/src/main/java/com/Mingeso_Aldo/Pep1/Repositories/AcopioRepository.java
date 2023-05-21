@@ -23,8 +23,8 @@ public interface AcopioRepository extends JpaRepository<AcopioEntity, String> {
     @Query("select e from AcopioEntity e")
     ArrayList<AcopioEntity> getAll();
 
-    @Query("select e from AcopioEntity e where e.proveedor = :codigo and e.ID_ACOPIO = :id_acopio")
-    ArrayList<AcopioEntity> findFiltro(Integer id_acopio, String codigo);
+    @Query("select e from AcopioEntity e where e.proveedor = :codigo and e.ID_archivo = :id_archivo")
+    ArrayList<AcopioEntity> findFiltro(Integer id_archivo, String codigo);
 
     /*
     @Query(value = "select e.fecha from acopio e where e.proveedor = :codigo and e.ID_archivo = :id_archivo", nativeQuery = true)

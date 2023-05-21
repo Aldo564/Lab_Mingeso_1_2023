@@ -31,20 +31,12 @@ public class SubirDataService {
     @Autowired
     private PorcentajeRepository dataPorcentajeRepository;
 
-    Integer ID_ARCHIVO_ACOPIO = 0;
-    Integer ID_ARCHIVO_PORCENTAJE = 0;
+    Integer ID_ARCHIVO_ACOPIO = 1;
+    Integer ID_ARCHIVO_PORCENTAJE = 1;
     private final Logger logg = LoggerFactory.getLogger(SubirDataService.class);
 
-    public ArrayList<AcopioEntity> obtenerDataAcopio(){
-        return (ArrayList<AcopioEntity>) dataAcopioRepository.findAll();
-    }
-
-    public ArrayList<PorcentajeEntity> obtenerDataPorcentaje() {
-        return (ArrayList<PorcentajeEntity>) dataPorcentajeRepository.findAll();
-    }
-
     @Generated
-    public String guardar(MultipartFile file){
+    public boolean guardar(MultipartFile file){
         String filename = file.getOriginalFilename();
         if(filename != null){
             if(!file.isEmpty()){
@@ -58,17 +50,17 @@ public class SubirDataService {
                     logg.error("ERROR", e);
                 }
             }
-            return "Archivo guardado con exito!";
+            return true;
         }
         else{
-            return "No se pudo guardar el archivo";
+            return false;
         }
     }
 
     /* Metodos para guardar datos de los archivos .csv de Acopio*/
 
     @Generated
-    public void leerCsvAcopio(String direccion){
+    public boolean leerCsvAcopio(String direccion){
         String texto = "";
         BufferedReader bf = null;
         //dataAcopioRepository.deleteAll();
@@ -88,18 +80,20 @@ public class SubirDataService {
             }
             texto = temp;
             System.out.println("Archivo leido exitosamente");
+            ID_ARCHIVO_ACOPIO++;
+            return true;
         }catch(Exception e){
             System.err.println("No se encontro el archivo");
         }finally{
             if(bf != null){
                 try{
-                    ID_ARCHIVO_ACOPIO++;
                     bf.close();
                 }catch(IOException e){
                     logg.error("ERROR", e);
                 }
             }
         }
+        return false;
     }
 
     public void guardarDataAcopio(AcopioEntity data){
@@ -116,14 +110,10 @@ public class SubirDataService {
         guardarDataAcopio(newData);
     }
 
-    public void eliminarDataAcopio(ArrayList<AcopioEntity> datas){
-        dataAcopioRepository.deleteAll(datas);
-    }
-
     /* Metodos para guardar datos de los archivos .csv de Porcentaje*/
 
     @Generated
-    public void leerCsvPorcentaje(String direccion){
+    public boolean leerCsvPorcentaje(String direccion){
         String texto = "";
         BufferedReader bf = null;
         //dataPorcentajeRepository.deleteAll();
@@ -143,18 +133,20 @@ public class SubirDataService {
             }
             texto = temp;
             System.out.println("Archivo leido exitosamente");
+            ID_ARCHIVO_PORCENTAJE++;
+            return true;
         }catch(Exception e){
             System.err.println("No se encontro el archivo");
         }finally{
             if(bf != null){
                 try{
-                    ID_ARCHIVO_PORCENTAJE++;
                     bf.close();
                 }catch(IOException e){
                     logg.error("ERROR", e);
                 }
             }
         }
+        return false;
     }
 
     public void guardarDataPorcentaje(PorcentajeEntity data){
@@ -171,7 +163,4 @@ public class SubirDataService {
         guardarDataPorcentaje(newData);
     }
 
-    public void eliminarDataPorcentaje(ArrayList<PorcentajeEntity> datas){
-        dataPorcentajeRepository.deleteAll(datas);
-    }
 }

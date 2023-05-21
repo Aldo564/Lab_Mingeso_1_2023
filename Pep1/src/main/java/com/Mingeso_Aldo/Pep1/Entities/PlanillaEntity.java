@@ -41,4 +41,5 @@ public class PlanillaEntity {
     private String pago_total;
     private String monto_retencion;
     private String monto_final;
+    private boolean borrado;
 }

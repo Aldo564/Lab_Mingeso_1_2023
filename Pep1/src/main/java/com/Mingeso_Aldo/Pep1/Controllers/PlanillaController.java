@@ -23,9 +23,6 @@ public class PlanillaController {
     @Autowired
     private PagoService pagoService;
 
-    //@Autowired
-    //private PagoService pagoService;
-
 
     @GetMapping("/seleccionarPlanilla")
     public String main(Model model){
@@ -46,9 +43,7 @@ public class PlanillaController {
     @GetMapping("/generarPlanilla")
     public String generarPlanilla(Model model, @RequestParam("codigo") String codigo)
     {
-        System.out.println("Antes de generar planilla");
         PlanillaEntity planilla = pagoService.generarPlanilla(codigo);
-        System.out.println("Generando planilla");
         if (planilla == null)
         {
             model.addAttribute("NoDataMessage", "No existen pagos asociados a este codigo de proveedor");

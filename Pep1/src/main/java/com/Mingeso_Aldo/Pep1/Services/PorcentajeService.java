@@ -1,9 +1,11 @@
 package com.Mingeso_Aldo.Pep1.Services;
 
 import com.Mingeso_Aldo.Pep1.Entities.AcopioEntity;
+import com.Mingeso_Aldo.Pep1.Entities.PlanillaEntity;
 import com.Mingeso_Aldo.Pep1.Entities.PorcentajeEntity;
 import com.Mingeso_Aldo.Pep1.Repositories.AcopioRepository;
 import com.Mingeso_Aldo.Pep1.Repositories.PorcentajeRepository;
+import lombok.Generated;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,15 +39,13 @@ public class PorcentajeService {
         cant = aux.size();
         return cant;
     }
+
     public int obtenerGrasa(String codigo)
     {
-        System.out.println("obtener grasa");
         ArrayList<PorcentajeEntity> porcentajes = porcentajeRepository.getAll();
-        int id = obtenerCantArchivos(porcentajes) - 1;
+        int id = obtenerCantArchivos(porcentajes);
 
         PorcentajeEntity porcentaje_Actual_Filtrado = porcentajeRepository.findFiltro(id, codigo);
-        System.out.println("7.1");
-
         int grasa = porcentaje_Actual_Filtrado.getGrasa();
 
         return grasa;
@@ -54,7 +54,7 @@ public class PorcentajeService {
     public int obtenerSolido(String codigo)
     {
         ArrayList<PorcentajeEntity> porcentajes = porcentajeRepository.getAll();
-        int id = obtenerCantArchivos(porcentajes) - 1;
+        int id = obtenerCantArchivos(porcentajes);
 
         PorcentajeEntity porcentaje_Actual_Filtrado = porcentajeRepository.findFiltro(id, codigo);
         int solido = porcentaje_Actual_Filtrado.getSolido();
@@ -65,10 +65,10 @@ public class PorcentajeService {
     public String obtenerDiferenciaGrasa(String codigo)
     {
         ArrayList<PorcentajeEntity> porcentajes = porcentajeRepository.getAll();
-        int id = obtenerCantArchivos(porcentajes) - 1;
-        String variacion = "";
+        int id = obtenerCantArchivos(porcentajes);
+        String variacion = "0";
 
-        if (id == 0)
+        if (id == 1)
         {
             variacion = "0";
         }
@@ -77,12 +77,11 @@ public class PorcentajeService {
             PorcentajeEntity porcentaje_Actual = porcentajeRepository.findFiltro(id, codigo);
             PorcentajeEntity porcentaje_Pasado = porcentajeRepository.findFiltro(id-1, codigo);
 
-            int porcentaje = (porcentaje_Actual.getGrasa() * 100)/porcentaje_Pasado.getGrasa();
-            if (porcentaje >= 100)
+            if (porcentaje_Pasado != null)
             {
-                porcentaje = porcentaje - 100;
+                int porcentaje = (porcentaje_Actual.getGrasa() * 100)/porcentaje_Pasado.getGrasa();
+                variacion = Integer.toString(porcentaje);
             }
-            variacion = Integer.toString(porcentaje);
         }
 
         return variacion;
@@ -90,11 +89,11 @@ public class PorcentajeService {
 
     public String obtenerDiferenciaSolido(String codigo)
     {
-        ArrayList<PorcentajeEntity> porcentajes = porcentajeRepository.getAll();
-        int id = obtenerCantArchivos(porcentajes) - 1;
-        String variacion = "";
+        ArrayList<PorcentajeEntity> porcentajes = obtenerPorcentajes();
+        int id = obtenerCantArchivos(porcentajes);
+        String variacion = "0";
 
-        if (id == 0)
+        if (id == 1)
         {
             variacion = "0";
         }
@@ -103,14 +102,20 @@ public class PorcentajeService {
             PorcentajeEntity porcentaje_Actual = porcentajeRepository.findFiltro(id, codigo);
             PorcentajeEntity porcentaje_Pasado = porcentajeRepository.findFiltro(id-1, codigo);
 
-            int porcentaje = (porcentaje_Actual.getSolido() * 100)/porcentaje_Pasado.getSolido();
-            if (porcentaje >= 100)
+            if (porcentaje_Pasado != null)
             {
-                porcentaje = porcentaje - 100;
+                int porcentaje = (porcentaje_Actual.getSolido() * 100)/porcentaje_Pasado.getSolido();
+                variacion = Integer.toString(porcentaje);
             }
-            variacion = Integer.toString(porcentaje);
         }
 
         return variacion;
     }
+
+    @Generated
+    public void eliminarData(ArrayList<PorcentajeEntity> datas)
+    {
+        porcentajeRepository.deleteAll(datas);
+    }
+
 }
