@@ -1,0 +1,5 @@
+para sonarqube
+ejecutar el StartSonar.bat
+
+para jenkins (esta en descargas)
+java -jar jenkins.war

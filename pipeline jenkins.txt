@@ -1,0 +1,62 @@
+pipeline{
+	agent any
+	tools{
+	    maven "maven"
+	}
+	stages{
+		stage("Build JAR"){
+			steps{
+				checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Aldo564/Lab_Mingeso_1_2023']])
+			    dir("Pep1")
+			    {
+			        sh "mvn clean install"
+			    }
+			}
+		}
+		stage("Test"){
+			steps{
+				dir("Pep1")
+				{
+				    sh "mvn test"
+				}
+			}
+		}
+		stage("Sonarqube Analysis"){
+			steps{
+				dir("Pep1")
+				{
+				    sh "mvn clean verify sonar:sonar -Dsonar.projectKey=pep1 -Dsonar.host.url=http://localhost:9000 -Dsonar.login=sqp_678caa140d81fae062b46b5f5b6628d7604e49e8"
+				}
+			}
+		}
+    	stage("Build docker image"){
+			steps{
+				dir("Pep1")
+				{
+				    sh "docker build -t aldo564/pep1_mingeso_docker ."
+				}
+			}
+		}
+    	stage("Push docker image"){
+    			steps{
+    				dir("Pep1")
+    				{
+    				    withCredentials([string(credentialsId: 'dckrhubpassword', variable: 'dckpass')]) {
+                            sh "docker login -u aldo564 -p ${dckpass}"
+                        }
+                        sh "docker push aldo564/pep1_mingeso_docker"
+    				}
+    			}
+    		}
+	}
+	post
+	{
+	    always
+	    {
+	        dir("Pep1")
+	        {
+	            sh "docker logout"
+	        }
+	    }
+	}
+}
