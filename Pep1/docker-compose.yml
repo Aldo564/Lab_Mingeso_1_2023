@@ -1,5 +1,18 @@
 version: "3.8"
 services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx-proxy
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - app1
+      - app2
+      - app3
+
   mysql-db:
     image: mysql:latest
     restart: always
@@ -10,11 +23,42 @@ services:
       MYSQL_DATABASE: mingeso12023
     ports:
       - 33060:3306
-  app:
-    container_name: pep1_mingeso_docker
+
+  app1:
+    container_name: pep1_mingeso_docker1
     image: aldo564/pep1_mingeso_docker
     ports:
-      - "8090:8090"
+      - "8091:8090"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/mingeso12023?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=password
+    deploy:
+      restart_policy:
+        condition: on-failure
+    depends_on:
+      - mysql-db
+
+  app2:
+    container_name: pep1_mingeso_docker2
+    image: aldo564/pep1_mingeso_docker
+    ports:
+      - "8092:8090"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/mingeso12023?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=password
+    deploy:
+      restart_policy:
+        condition: on-failure
+    depends_on:
+      - mysql-db
+
+  app3:
+    container_name: pep1_mingeso_docker3
+    image: aldo564/pep1_mingeso_docker
+    ports:
+      - "8093:8090"
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/mingeso12023?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false
       - SPRING_DATASOURCE_USERNAME=root
