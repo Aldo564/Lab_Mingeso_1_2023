@@ -1,19 +1,19 @@
 # Aplicación Monolítica
 # Métodos de ingeniería de software
-En este repositorio se abarca la evaluacion número 1 para el ramo de Métodos de ingeniería de 
+En este repositorio se abarca la evaluación número 1 para el ramo de Métodos de ingeniería de 
 software de la Universidad de Santiago de Chile
 
 
 * Autor: Aldo Castillo P.
-* Seccion: 13220-0-B-2
+* Sección: 13220-0-B-2
 * Profesor: Alcides Quispe
 * Ayudante: John Serrano
 
 ___
 
-# Tecnologias Aplicadas
+# Tecnologías Aplicadas
 
-La aplicacion esta desarrollada en [SpringBoot](https://start.spring.io)
+La aplicación está desarrollada en [SpringBoot](https://start.spring.io)
 - Java
 - Html 5
 - Css
