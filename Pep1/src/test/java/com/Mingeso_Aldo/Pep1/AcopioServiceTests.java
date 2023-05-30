@@ -24,102 +24,6 @@ class AcopioServiceTests {
 	void contextLoads() {
 	}
 
-	/*
-	// 4 datos de acopio distintos
-	@Test
-	public void testObtenerAcopios()
-	{
-		//################################################################
-		// Poblando db con datos dummies
-
-		AcopioEntity aux1 = new AcopioEntity();
-		aux1.setID_ACOPIO(1);
-		aux1.setID_archivo(2);
-		aux1.setFecha("17/03/2023");
-		aux1.setTurno("M");
-		aux1.setProveedor("1003");
-		aux1.setKg_leche(50);
-
-		AcopioEntity aux2 = new AcopioEntity();
-		aux2.setID_ACOPIO(2);
-		aux2.setID_archivo(2);
-		aux2.setFecha("17/03/2023");
-		aux2.setTurno("T");
-		aux2.setProveedor("1003");
-		aux2.setKg_leche(50);
-
-		AcopioEntity aux3 = new AcopioEntity();
-		aux3.setID_ACOPIO(3);
-		aux3.setID_archivo(2);
-		aux3.setFecha("16/03/2023");
-		aux3.setTurno("M");
-		aux3.setProveedor("1000");
-		aux3.setKg_leche(50);
-
-		AcopioEntity aux4 = new AcopioEntity();
-		aux4.setID_ACOPIO(4);
-		aux4.setID_archivo(1);
-		aux4.setFecha("31/03/2023");
-		aux4.setTurno("M");
-		aux4.setProveedor("1000");
-		aux4.setKg_leche(50);
-
-		acopioRepository.save(aux1);
-		acopioRepository.save(aux2);
-		acopioRepository.save(aux3);
-		acopioRepository.save(aux4);
-
-		//################################################################
-
-		ArrayList<AcopioEntity> expected = new ArrayList<>();
-
-		AcopioEntity aux6 = new AcopioEntity();
-		aux6.setID_ACOPIO(1);
-		aux6.setID_archivo(2);
-		aux6.setFecha("17/03/2023");
-		aux6.setTurno("M");
-		aux6.setProveedor("1003");
-		aux6.setKg_leche(50);
-
-		AcopioEntity aux7 = new AcopioEntity();
-		aux7.setID_ACOPIO(2);
-		aux7.setID_archivo(2);
-		aux7.setFecha("17/03/2023");
-		aux7.setTurno("T");
-		aux7.setProveedor("1003");
-		aux7.setKg_leche(50);
-
-		AcopioEntity aux8 = new AcopioEntity();
-		aux8.setID_ACOPIO(3);
-		aux8.setID_archivo(2);
-		aux8.setFecha("16/03/2023");
-		aux8.setTurno("M");
-		aux8.setProveedor("1000");
-		aux8.setKg_leche(50);
-
-		AcopioEntity aux9 = new AcopioEntity();
-		aux9.setID_ACOPIO(4);
-		aux9.setID_archivo(1);
-		aux9.setFecha("31/03/2023");
-		aux9.setTurno("M");
-		aux9.setProveedor("1000");
-		aux9.setKg_leche(50);
-
-		expected.add(aux6);
-		expected.add(aux7);
-		expected.add(aux8);
-		expected.add(aux9);
-
-		ArrayList<AcopioEntity> result = acopioService.obtenerAcopios();
-
-		assertEquals(expected, result);
-
-		acopioService.eliminarData(result);
-		acopioService.eliminarData(expected);
-	}
-
- 	*/
-
 	// 100 kls de leche en el último acopio
 	@Test
 	public void testKgs_leche()
@@ -307,8 +211,7 @@ class AcopioServiceTests {
 	}
 
 
-
-	// Variacion del 400% con 75kg mas en relacion al anterior (25kg)
+	// Variacion del 400% con 75kg más en relacion al anterior (25kg)
 	@Test
 	public void testObtenerVariacionLeche()
 	{

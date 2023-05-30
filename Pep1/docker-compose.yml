@@ -14,7 +14,7 @@ services:
       - app3
 
   mysql-db:
-    image: mysql:latest
+    image: mysql
     restart: always
     volumes:
       - ./data/db:/var/lib/mysql-db
